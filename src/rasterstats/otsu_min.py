@@ -3,8 +3,8 @@ from skimage.filters import threshold_otsu
 
 def otsu_min(y):
     y = y.compressed()
+    print("oh heck")
     if y.min() == y.max():
-        print("oh heck")
         return y.min()
     y =  np.ma.masked_where(y < 1, y)
     thresh = threshold_otsu(y)
