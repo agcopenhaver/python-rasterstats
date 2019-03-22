@@ -7,11 +7,13 @@ from shapely.geometry import shape
 import numpy as np
 import numpy.distutils.system_info as sysinfo
 import warnings
+from scipy import stats
 
 from .io import read_features, Raster
 from .utils import (rasterize_geom, get_percentile, check_stats,
                     remap_categories, key_assoc_val, boxify_points)
-
+from .spatial_nGINI import spatial_nGINI
+from .otsu_min import otsu_min
 
 def raster_stats(*args, **kwargs):
     """Deprecated. Use zonal_stats instead."""
@@ -238,7 +240,12 @@ def gen_zonal_stats(
                     except KeyError:
                         rmax = float(masked.max())
                     feature_stats['range'] = rmax - rmin
-
+                if 'cv' in stats:
+                    feature_stats['cv'] = float(stats.variation(masked, Axis=None)
+                if 'gini' in stats:
+                    feature_stats['gini'] = float(spatial_nGINI(masked))                                 
+                if 'otsu_min' in stats:
+                    feature_stats['otsu_min'] = float(otsu_min(masked))                                     
                 for pctile in [s for s in stats if s.startswith('percentile_')]:
                     q = get_percentile(pctile)
                     pctarr = masked.compressed()
