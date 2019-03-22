@@ -4,8 +4,8 @@ from skimage.filters import threshold_otsu
 def otsu_min(y):
     y = y.compressed()
     print("oh heck")
-    ymin = (y.min)
-    ymax = (y.max)
+    ymin = float((y.min()))
+    ymax = float((y.max()))
     print(ymin)
     print(ymax)
     if ymin == ymax:
