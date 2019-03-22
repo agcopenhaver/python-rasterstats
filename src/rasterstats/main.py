@@ -231,7 +231,7 @@ def gen_zonal_stats(
                 if 'unique' in stats:
                     feature_stats['unique'] = len(list(pixel_count.keys()))
                 if 'cv' in stats:
-                    feature_stats['cv'] = float(statss.variation(masked, Axis=None))
+                    feature_stats['cv'] = float(statss.variation(masked, axis=None))
                 if 'gini' in stats:
                     feature_stats['gini'] = float(spatial_nGINI(masked))                                 
                 if 'otsu_min' in stats:
