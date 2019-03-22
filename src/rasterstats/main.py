@@ -7,7 +7,7 @@ from shapely.geometry import shape
 import numpy as np
 import numpy.distutils.system_info as sysinfo
 import warnings
-from scipy import stats
+from scipy import stats as statss
 
 from .io import read_features, Raster
 from .utils import (rasterize_geom, get_percentile, check_stats,
@@ -231,7 +231,7 @@ def gen_zonal_stats(
                 if 'unique' in stats:
                     feature_stats['unique'] = len(list(pixel_count.keys()))
                 if 'cv' in stats:
-                    feature_stats['cv'] = float(stats.variation(masked, Axis=None))
+                    feature_stats['cv'] = float(statss.variation(masked, Axis=None))
                 if 'gini' in stats:
                     feature_stats['gini'] = float(spatial_nGINI(masked))                                 
                 if 'otsu_min' in stats:
