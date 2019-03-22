@@ -230,6 +230,12 @@ def gen_zonal_stats(
                     feature_stats['minority'] = float(key_assoc_val(pixel_count, min))
                 if 'unique' in stats:
                     feature_stats['unique'] = len(list(pixel_count.keys()))
+                if 'cv' in stats:
+                    feature_stats['cv'] = float(stats.variation(masked, Axis=None))
+                if 'gini' in stats:
+                    feature_stats['gini'] = float(spatial_nGINI(masked))                                 
+                if 'otsu_min' in stats:
+                    feature_stats['otsu_min'] = float(otsu_min(masked))  
                 if 'range' in stats:
                     try:
                         rmin = feature_stats['min']
@@ -239,13 +245,7 @@ def gen_zonal_stats(
                         rmax = feature_stats['max']
                     except KeyError:
                         rmax = float(masked.max())
-                    feature_stats['range'] = rmax - rmin
-                if 'cv' in stats:
-                    feature_stats['cv'] = float(stats.variation(masked, Axis=None)
-                if 'gini' in stats:
-                    feature_stats['gini'] = float(spatial_nGINI(masked))                                 
-                if 'otsu_min' in stats:
-                    feature_stats['otsu_min'] = float(otsu_min(masked))                                     
+                    feature_stats['range'] = rmax - rmin  
                 for pctile in [s for s in stats if s.startswith('percentile_')]:
                     q = get_percentile(pctile)
                     pctarr = masked.compressed()
